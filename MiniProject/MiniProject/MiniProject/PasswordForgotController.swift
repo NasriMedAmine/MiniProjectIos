@@ -58,11 +58,17 @@ class PasswordForgotController: UIViewController {
                                 
                                 if(jsonRes["succes"] == "true"){
                                     
-                                    
+                                    print("----------------------------------------------------------------")
+                                    print("----------------------------------------------------------------")
+                                    print("---------------------------test kbal container forget password----------")
+
                                     SingletonClass.shared.emailUser = jsonRes["email"].rawValue as! String
                                     SingletonClass.shared.nameUser = jsonRes["username"].rawValue as! String
+                                    SingletonClass.shared.isContainerPasswordForget = true
                                     
-                                    
+                                    print("----------------------------------------------------------------")
+                                    print("----------------------------------------------------------------")
+
                                     
                                     
                                     self.container2.isHidden = false

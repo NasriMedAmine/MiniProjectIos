@@ -51,7 +51,7 @@ class LoginController: UIViewController {
     }
     
     
-    let eyeImageView = UIImageView(image: UIImage(systemName: "eye"))
+    let eyeImageView = UIImageView(image: UIImage(systemName: "eye.slash"))
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -219,6 +219,11 @@ class LoginController: UIViewController {
                                 var email = jsonRes["user"]["email"].rawValue as! String
                                 var password = jsonRes["user"]["password"].rawValue as! String
                                 var token = jsonRes["token"].rawValue as! String
+                                
+                                
+                                SingletonClass.shared.token = token
+                                SingletonClass.shared.emailUser = email
+                                SingletonClass.shared.nameUser = name
                                 
                                 
                                 
@@ -460,7 +465,7 @@ class LoginController: UIViewController {
                             
                             if(jsonRes["succes"] == "true"){
                             
-                                
+                                SingletonClass.shared.token = token
                                 
                                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
 

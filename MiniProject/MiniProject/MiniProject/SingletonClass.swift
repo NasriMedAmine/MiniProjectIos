@@ -15,7 +15,15 @@ class SingletonClass: NSObject {
     
     var emailUser: String = ""
     var nameUser: String = ""
+    var token: String = ""
     
     
+    var isContainerPasswordForget: Bool = false
+    
+    var isSayeKamelLocation: Bool = false
+
+    var latitude: Double = 0
+    var longitude: Double = 0
+
     private override init() {}
 }

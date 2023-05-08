@@ -114,8 +114,8 @@ class SignUpController: UIViewController{
     
     }
     
-    let eyeImageView = UIImageView(image: UIImage(systemName: "eye"))
-    let eyeImageView2 = UIImageView(image: UIImage(systemName: "eye"))
+    let eyeImageView = UIImageView(image: UIImage(systemName: "eye.slash"))
+    let eyeImageView2 = UIImageView(image: UIImage(systemName: "eye.slash"))
 
     override func viewDidLoad() {
         super.viewDidLoad()

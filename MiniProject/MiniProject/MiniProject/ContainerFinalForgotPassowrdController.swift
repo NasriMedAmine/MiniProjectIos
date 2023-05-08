@@ -25,7 +25,13 @@ class ContainerFinalForgotPassowrdController: UIViewController {
         
         
         
-        
+        guard labelpassword1.text == labelpassword2.text else {
+            let alertController = UIAlertController(title: "Error", message: "Passwords do not match", preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+            alertController.addAction(okAction)
+            present(alertController, animated: true, completion: nil)
+            return
+        }
         
         let parameters: [String: String] = [
                 "newcode": labelpassword1.text! as String,
@@ -90,7 +96,8 @@ class ContainerFinalForgotPassowrdController: UIViewController {
         
     }
     
-    
+    let eyeImageView3 = UIImageView(image: UIImage(systemName: "eye.slash"))
+    let eyeImageView4 = UIImageView(image: UIImage(systemName: "eye.slash"))
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -106,8 +113,12 @@ class ContainerFinalForgotPassowrdController: UIViewController {
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 20))
         labelpassword1.leftView = paddingView
         labelpassword1.leftViewMode = .always
-        
-        
+        labelpassword1.isSecureTextEntry = true
+        labelpassword1.rightView = eyeImageView3
+        labelpassword1.rightViewMode = .always
+        let tapGestureRecognizer3 = UITapGestureRecognizer(target: self, action: #selector(handleEyeIconTap3(_:)))
+        eyeImageView3.isUserInteractionEnabled = true
+        eyeImageView3.addGestureRecognizer(tapGestureRecognizer3)
         
         
         
@@ -122,10 +133,39 @@ class ContainerFinalForgotPassowrdController: UIViewController {
         let paddingView2 = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 20))
         labelpassword2.leftView = paddingView2
         labelpassword2.leftViewMode = .always
+        labelpassword2.isSecureTextEntry = true
+        labelpassword2.rightView = eyeImageView4
+        labelpassword2.rightViewMode = .always
+        let tapGestureRecognizer4 = UITapGestureRecognizer(target: self, action: #selector(handleEyeIconTap4(_:)))
+        eyeImageView4.isUserInteractionEnabled = true
+        eyeImageView4.addGestureRecognizer(tapGestureRecognizer4)
         // Do any additional setup after loading the view.
     }
     
 
+    @objc func handleEyeIconTap3(_ sender: UITapGestureRecognizer) {
+            // Toggle the visibility of the password text
+        labelpassword1.isSecureTextEntry.toggle()
+
+            // Update the eye icon image to reflect the current password text visibility
+            if labelpassword1.isSecureTextEntry {
+                eyeImageView3.image = UIImage(systemName: "eye.slash")
+            } else {
+                eyeImageView3.image = UIImage(systemName: "eye")
+            }
+        }
+
+    @objc func handleEyeIconTap4(_ sender: UITapGestureRecognizer) {
+            // Toggle the visibility of the password text
+        labelpassword2.isSecureTextEntry.toggle()
+
+            // Update the eye icon image to reflect the current password text visibility
+            if labelpassword2.isSecureTextEntry {
+                eyeImageView4.image = UIImage(systemName: "eye.slash")
+            } else {
+                eyeImageView4.image = UIImage(systemName: "eye")
+            }
+        }
     /*
     // MARK: - Navigation
 

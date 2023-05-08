@@ -9,5 +9,7 @@ target 'MiniProject' do
   pod 'Alamofire'
   pod 'SwiftyJSON'
   pod 'Starscream'
+  pod 'Socket.IO-Client-Swift'
+  pod 'SwiftUI-URLImage'
 
 end

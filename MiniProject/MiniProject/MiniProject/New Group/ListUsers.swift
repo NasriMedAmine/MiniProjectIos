@@ -10,6 +10,9 @@ import SwiftUI
 
 
 struct ListUsers: View {
+    @StateObject private var viewModel = ModelListUser()
+
+    
     @State private var text = ""
     var body: some View {
         NavigationView{
@@ -20,26 +23,40 @@ struct ListUsers: View {
                                     .cornerRadius(110.0)
                                     .frame(width: 350.0)
                 ZStack{
-                    List{
-                        NavigationLink(destination: ProfileUser(user: user1))
-                        {
-                            CardUserItem(user: user1)
+                    
+                    
+                    
+                    
+//                    List(self.viewModel.listCardUserItem) {user in
+//
+//                        NavigationLink(destination: ProfileUser(user: user))
+//                        {
+//                            CardUserItem(user: user)
+//                                .listRowSeparator(.hidden)
+//                        }
+//                                    }
+                    
+                    
+                    
+                    
+                    
+                    List(viewModel.listCardUserItem) { user in
+                        NavigationLink(destination: ProfileUser(user: user)) {
+                            CardUserItem(user: user)
                                 .listRowSeparator(.hidden)
                         }
-                        NavigationLink(destination: ProfileUser(user: user2))
-                        {
-                            CardUserItem(user: user2)
-                                .listRowSeparator(.hidden)
-                                
-                        }
-                        NavigationLink(destination: ProfileUser(user: user2))
-                        {
-                            CardUserItem(user: user2)
-                                .listRowSeparator(.hidden)
-                        }
+                        
                     }
+                    
+                    
+                        
+                   
                 }
                 .listStyle(.plain)
+                .onAppear {
+                    self.viewModel.fetchUser()
+                    
+                }
                 
             }
             

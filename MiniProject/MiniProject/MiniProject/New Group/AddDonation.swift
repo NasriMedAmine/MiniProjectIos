@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Alamofire
 
 struct AddDonation: View {
     
@@ -14,6 +15,9 @@ struct AddDonation: View {
     private var name = ""
     @State
     private var description = ""
+    
+    
+  
     
     @State var isCheckedFood: Bool = false
     @State var isCheckedClothes: Bool = false
@@ -30,7 +34,6 @@ struct AddDonation: View {
         ZStack {
             
             VStack {
-                
                 
                 //awel wahda mtaa AddDonation text
                 ZStack {
@@ -61,12 +64,11 @@ struct AddDonation: View {
                         HStack{
                             
                             
-                            
-                            
                             Checkbox(isChecked: $isCheckedFood)
                             
                             Text("Food")
                             Spacer().frame(width: 80)
+                            
                             
                             
                             
@@ -105,7 +107,7 @@ struct AddDonation: View {
                 Spacer().frame(height: 30)
                 
                 
-                //hedhi input
+               
                 
                 TextField("Add donation name" ,text: $name)
                     .padding()
@@ -133,7 +135,7 @@ struct AddDonation: View {
                     HStack{
                         
                         Button(action: {
-                            print("nzeelt")
+                            addDonation()
                         }) {
                             Text("Submit")
                                 .frame(width: 100)
@@ -260,8 +262,40 @@ struct AddDonation: View {
     
     
     
-    
-    
+    func addDonation() {
+        let endpointURL = "http://localhost:3007/donation/"
+        
+        var typeDonation: [String] = []
+        if isCheckedClothes {
+            typeDonation.append("Clothes")
+        }
+        if isCheckedFood {
+            typeDonation.append("Food")
+        }
+        if isCheckedOther {
+            typeDonation.append("Other")
+        }
+        if isCheckedMoney {
+            typeDonation.append("Money")
+        }
+        
+        let parameters: [String: Any] = [
+            "titre": name,
+            "typedonation" : typeDonation,
+            "description" : description,
+        ]
+        
+        AF.request(endpointURL, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in
+            switch response.result {
+            case .success(let data):
+                print("Donation added successfully")
+                
+                
+            case .failure(let error):
+                print("Error adding donation: \(error.localizedDescription)")
+            }
+        }
+    }
     
     
     

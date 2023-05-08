@@ -7,12 +7,19 @@
 
 import Foundation
 
-struct Donation {
-    let photo   : String
-    let title: String
-    let typeDonation: String
+struct Donation: Codable, Identifiable {
+    let id: String
+
+    let titre: String
+    let typedonation: [String]
     let description: String
     
+    
+    enum CodingKeys: String, CodingKey {
+        case id = "_id"
+        case description
+        case typedonation
+        case titre
+        
+    }
 }
-
-let donation2  = Donation(photo       : "donation1",title  :  "9almassa", typeDonation    : "9almassa", description  : "9almassa")

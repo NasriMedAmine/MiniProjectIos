@@ -17,14 +17,14 @@ struct CardUserItem: View {
             HStack{
                 
                 ZStack{
-                    Image(user.Photo)
+                    Image("sfax")
                         .aspectRatio( contentMode: .fill)
                         .frame(width: 50, height: 50)
                         .cornerRadius(50)
                 }
                 
                 VStack{
-                    Text(user.fullname)
+                    Text(user.name)
                         .font(.title).bold()
                     
                 }
@@ -47,7 +47,7 @@ struct CardUserItem: View {
 
 struct CardUserItem_Previews: PreviewProvider {
     static var previews: some View {
-        CardUserItem(user: user1)
+        CardUserItem(user: UserYassine(id: "4444", name: "yassine", username: "yassine", email: "yassine", password: "yassine", tel: 44444, photoName: "logo.png"))
             .previewLayout(.sizeThatFits)
         
         

@@ -6,25 +6,40 @@
 //
 
 import SwiftUI
+import Alamofire
 
 struct ListDonations: View {
-    var body: some View {
+    @State var donations: [Donation] = []
+    
+    @StateObject private var viewModel = ModelListUser()
+
         
-        ZStack{
-            List{
-                CardDonationItem(donation: donation2)
-                    .listRowSeparator(.hidden)
-                CardDonationItem(donation: donation2)
-                    .listRowSeparator(.hidden)
+        var body: some View {
+    
+                ZStack{
+                       List(viewModel.listCardDonation) { donation in
+                        CardDonationItem(donation: donation)                    }
+                    
+                    
+                    
+                }
+                .listStyle(.plain)
+                .onAppear {
+                    viewModel.fetchDonations()
+                }
+//                List(donations, id: \.title) { donation in
+//                    CardDonationItem(donation: donation)
+//                }
+//                .listStyle(.plain)
+//                .navigationBarTitle("Donations")
+                
+                
+                
             }
             
-        }
-        .listStyle(.plain)
-       
         
         
         
-    }
 }
 
 

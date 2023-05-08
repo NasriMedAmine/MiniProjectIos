@@ -6,16 +6,66 @@
 //
 
 import Foundation
-struct UserYassine {
-    let fullname: String
-    let Username: String
-    let Email: String
-    let Password : String
-    let Phone : String
-    let Photo : String
+
+
+struct UserYassine: Codable, Identifiable {
+    let id: String
+    let name: String
+    let username: String
+    let email: String
+    let password : String
+    let tel : Int
+    let photoName : String
+    
+    enum CodingKeys: String, CodingKey {
+        case id = "_id"
+        case name
+        case username
+        case email
+        case password
+        case tel
+        case photoName
+    }
 }
 
 
-let user1 = UserYassine(fullname: "Yassine Aridhi", Username: "Lyass", Email: "Yassine@gmail.com", Password: "Yass", Phone: "12345678", Photo: "donation1")
 
-let user2 = UserYassine(fullname: "Med amine", Username: "9almassa", Email: "9almassa@gmail.com", Password: "9almassa", Phone: "12312312", Photo: "donation2")
+struct UserYassine2:Codable {
+    let username: String
+    
+    
+    enum CodingKeys: String, CodingKey {
+            case username = "name"
+        }
+    
+}
+
+
+
+
+
+struct MapLocationTest:Codable {
+    let name: String
+    let nameImage: String
+    let description: String
+
+
+    let latitude: Float
+    let longitude: Float
+    let price: Float
+
+    enum CodingKeys: String, CodingKey {
+            case name = "name"
+            case nameImage = "nameImage"
+            case description = "description"
+            case latitude = "latitude"
+            case longitude = "longitude"
+            case price = "price"
+        }
+    
+    
+
+    
+    
+}
+

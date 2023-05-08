@@ -16,6 +16,10 @@ class ProfilController: UIViewController {
 
     
     
+    @IBOutlet weak var LogoutImageDoor: UIImageView!
+    
+    @IBOutlet weak var viewUserInfo: UIView!
+    
     @IBOutlet weak var fullnameLabel2: UILabel!
     
     @IBOutlet weak var userNameLabel2: UILabel!
@@ -38,9 +42,18 @@ class ProfilController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let borderColor = UIColor(red: 102/255, green: 206/255, blue: 200/255, alpha: 1.0).cgColor
+        self.imageView2.layer.borderWidth    = 4
+        self.imageView2.layer.borderColor = borderColor
+        self.imageView2.layer.cornerRadius = imageView2.frame.size.height/2
         
         
-        
+        self.viewUserInfo.layer.cornerRadius = imageView2.frame.size.height/10
+        self.viewUserInfo.layer.shadowColor = UIColor.black.cgColor
+        self.viewUserInfo.layer.shadowOpacity = 0.5
+        self.viewUserInfo.layer.shadowOffset = CGSize(width: 0, height: 2)
+        self.viewUserInfo.layer.shadowRadius = 4
+
         if let myString = self.getMyUserEmail() as? String {
             
             
@@ -59,7 +72,7 @@ class ProfilController: UIViewController {
             // Handle the error case here
         }
         
-        
+        tapgesture()
         
 
         // Do any additional setup after loading the view.
@@ -174,7 +187,65 @@ class ProfilController: UIViewController {
     }
     
     
+    func tapgesture(){
+        
+        
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(Logout))
+        
+        
+        LogoutImageDoor.addGestureRecognizer(tapGesture)
+        LogoutImageDoor.isUserInteractionEnabled = true
+    }
     
+    
+    
+    @objc func Logout() {
+        
+        
+        
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            let persistenContainer = appDelegate.persistentContainer
+            let managedContext = persistenContainer.viewContext
+            
+            let request = NSFetchRequest<NSManagedObject>(entityName: "User")
+            request.predicate = NSPredicate(format: "token = %@", SingletonClass.shared.token)
+            
+            do {
+                print("-----------------------------------------")
+                                                print("-----------------------------------------")
+                                                print("-----------SingletonClass.shared.token")
+                                                print(SingletonClass.shared.token)
+                let users = try managedContext.fetch(request)
+                if let user = users.first {
+                    print("-----------------------------------------")
+                                                    print("-----------------------------------------")
+                                                    print("-----------user")
+                                                    print(user)
+                    managedContext.delete(user)
+                    try managedContext.save()
+                    print("-----------------------------------------")
+                                                    print("-----------------------------------------")
+                                                    print("-----------managedContext")
+                                                    print(managedContext)
+                }
+            } catch let error as NSError {
+                print("Could not remove user. \(error), \(error.userInfo)")
+                print("-----------------------------------------")
+                                                print("-----------------------------------------")
+                                                print("-----------error")
+                                                print(error)
+            }
+        
+        
+        
+        
+        
+        
+        
+        print("yassine yassine")
+        performSegue(withIdentifier: "LogoutSegue", sender: nil)
+    }
     
 
     /*

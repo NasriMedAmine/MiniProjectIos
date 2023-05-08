@@ -6,9 +6,28 @@
 //
 
 import UIKit
+import SwiftUI
 
 class MainController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 
+    @IBOutlet weak var imageMap: UIImageView!
+    
+    @ObservedObject var managerInit = SocketIOManager()
+
+    
+ 
+    
+    @IBOutlet weak var goToListChatImage: UIImageView!
+    
+    struct Cell {
+        let name: String
+        let location: String
+        let price: Int
+        let date: String
+        let description: String
+    };
+    
+    var myData = [Cell]()
     
 
     @IBOutlet weak var CollectionImageSwip: UICollectionView!
@@ -23,6 +42,19 @@ class MainController: UIViewController, UICollectionViewDataSource, UICollection
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(imageTapped))
+        imageMap.isUserInteractionEnabled = true
+        imageMap.addGestureRecognizer(tapGesture)
+        
+        
+        let tapGesture2 = UITapGestureRecognizer(target: self, action: #selector(btnGoToListChat))
+        goToListChatImage.isUserInteractionEnabled = true
+        goToListChatImage.addGestureRecognizer(tapGesture2)
+        
+        
+        
+        
 //        navigationItem.hidesBackButton = true
 //        navigationItem.leftBarButtonItem = nil
         navigationController?.navigationBar.backIndicatorImage = UIImage()
@@ -53,6 +85,67 @@ class MainController: UIViewController, UICollectionViewDataSource, UICollection
         
         timer = Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: #selector(scrollToNextItem), userInfo: nil, repeats: true)
 //        timer = Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: #selector(SlideToNext), userInfo: nil, repeats: true)
+    }
+    
+    
+    
+    
+    
+    
+    
+    @objc func btnGoToListChat() {
+        
+        print("-------------------------------------------")
+        print("-------------------------------------------")
+        
+        print("tao nzelet aala btn btnGoToListChat")
+        let swiftUIView = ListMessages(manager2:managerInit)
+                let hostingController = UIHostingController(rootView: swiftUIView)
+                let navController = UINavigationController(rootViewController: hostingController)
+        hostingController.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .undo, target: self, action: #selector(dismissSwiftUIView))
+                present(navController, animated: true, completion: nil)
+        
+        print("-------------------------------------------")
+        print("-------------------------------------------")
+        
+        
+        
+    }
+    @objc func dismissSwiftUIView() {
+            dismiss(animated: true, completion: nil)
+        }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    @objc func imageTapped() {
+        print("-------------------------------------------")
+        print("-------------------------------------------")
+        
+        
+        
+//        let mapView = MapView() // create an instance of the SwiftUI view to present
+//            let hostingController = UIHostingController(rootView: mapView) // wrap the view in a hosting controller
+//            present(hostingController, animated: true, completion: nil) // present the hosting controller
+
+        
+        let swiftUIView = MapView()
+                let hostingController = UIHostingController(rootView: swiftUIView)
+                let navController = UINavigationController(rootViewController: hostingController)
+                hostingController.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(dismissSwiftUIView))
+                present(navController, animated: true, completion: nil)
+        
+        print("-------------------------------------------")
+        print("-------------------------------------------")
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

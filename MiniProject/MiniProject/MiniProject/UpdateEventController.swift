@@ -6,15 +6,29 @@
 //
 
 import UIKit
+import Alamofire
 
 class UpdateEventController: UIViewController {
 
     
+    @IBOutlet weak var DatePickerUpdate: UIDatePicker!
     @IBOutlet weak var upEventName: UITextField!
     @IBOutlet weak var upEventLocation: UITextField!
     @IBOutlet weak var upEventPrice: UITextField!
     @IBOutlet weak var upEventDescription: UITextField!
     
+    
+    var name: String?
+    
+    
+    
+    @IBAction func SubmitUpdateEvent(_ sender: Any) {
+      
+            
+        updateEvent(name: upEventName.text! as String, location: upEventLocation.text! as String, price: upEventPrice.text! as String, date: DatePickerUpdate.date, description: upEventDescription.text! as String)
+            
+
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,6 +44,7 @@ class UpdateEventController: UIViewController {
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 20))
         upEventName.leftView = paddingView
         upEventName.leftViewMode = .always
+        upEventName.text = name
         
         
         upEventLocation.layer.borderColor = borderColor
@@ -70,6 +85,28 @@ class UpdateEventController: UIViewController {
     }
     
 
+    func updateEvent(name: String, location: String, price: String, date: Date, description: String) {
+        let parameters: [String: Any] = [
+            "name": name,
+            "lieu": location,
+            "prix": price,
+            "date_event": date,
+            "description": description
+        ]
+        
+        
+        
+        AF.request("http://localhost:3007/event/upEventbyname", method: .put, parameters: parameters)
+            .validate()
+            .responseJSON { response in
+                switch response.result {
+                case .success(let value):
+                    print("Event updated successfully: \(value)")
+                case .failure(let error):
+                    print("Failed to update event: \(error)")
+                }
+        }
+    }
     /*
     // MARK: - Navigation
 

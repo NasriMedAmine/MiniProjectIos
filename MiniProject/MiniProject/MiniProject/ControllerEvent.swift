@@ -6,9 +6,11 @@
 //
 
 import UIKit
+import Alamofire
 
 class ControllerEvent: UIViewController,UITableViewDataSource   , UITableViewDelegate {
     
+    @IBOutlet weak var tableView: UITableView!
     struct Cell {
         let name: String
         let location: String
@@ -17,17 +19,45 @@ class ControllerEvent: UIViewController,UITableViewDataSource   , UITableViewDel
         let description: String
     };
     
-    var myData = [
-        Cell(name: "event1", location: "ben arous", price: 150, date: "27/02/2023", description: "dsqdqsdqsdq"),
-        Cell(name: "event2", location: "ben arous", price: 150, date: "27/02/2023", description: "dsqdqsdqsdq"),
-        Cell(name: "event1", location: "ben arous", price: 150, date: "27/02/2023", description: "dsqdqsdqsdq")
-    ];
+    var myData = [Cell]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        tableView.separatorStyle = .singleLine
+        fetchData()
         // Do any additional setup after loading the view.
     }
+    
+    func fetchData() {
+            let url = "http://localhost:3007/event/" // replace with your actual server endpoint
+            AF.request(url).responseJSON { response in
+                switch response.result {
+                case .success(let data):
+                    if let events = data as? [[String: Any]] {
+                        // Parse event data and add to myData array
+                        for event in events {
+                            if let name = event["name"] as? String,
+                               let location = event["lieu"] as? String,
+                               let priceString = event["prix"] as? String,
+                               let date = event["date_event"] as? String,
+                               let description = event["description"] as? String,
+                               let price = Int(priceString) {
+                                self.myData.append(Cell(name: name, location: location, price: price, date: date, description: description))
+                            }
+                        }
+                        self.tableView.reloadData()
+                    }
+                case .failure(let error):
+                    print(error)
+                }
+            }
+        }
+    
+    
+//    func numberOfSections(in tableView: UITableView) -> Int {
+//        return myData.count
+//    }
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -37,7 +67,8 @@ class ControllerEvent: UIViewController,UITableViewDataSource   , UITableViewDel
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell1 = tableView.dequeueReusableCell(withIdentifier: "mCellEvent")
-        
+        cell1?.separatorInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
+
         
         
         let contentView = cell1?.contentView
@@ -59,6 +90,85 @@ class ControllerEvent: UIViewController,UITableViewDataSource   , UITableViewDel
         description.text = myData[indexPath.row].description
         
         return cell1!
+    }
+    
+    
+
+    func deleteEvent(_ eventName: String) {
+        // Construct URL with query parameter
+        let url = URL(string: "http://localhost:3007/event/delEventbyname?name=\(eventName)")!
+        
+        // Make DELETE request using Alamofire
+        AF.request(url, method: .delete)
+            .validate()
+            .responseJSON { response in
+                switch response.result {
+                case .success(let value):
+                    print("Event deleted successfully: \(value)")
+                    if let index = self.myData.firstIndex(where: { $0.name == eventName }) {
+                                        self.myData.remove(at: index)
+                                        let indexPath = IndexPath(row: index, section: 0)
+                                        self.tableView.deleteRows(at: [indexPath], with: .automatic)
+                                        self.tableView.reloadData()
+                                    }
+                
+                case .failure(let error):
+                    print("Error deleting event: \(error)")
+                }
+        }
+    }
+    
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if (editingStyle == .delete) {
+            let eventNameToDelete = myData[indexPath.row].name
+            
+            
+            // Call deleteEvent API to delete event from the server
+            deleteEvent(eventNameToDelete)
+        }
+    }
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        // Delete action
+           let deleteAction = UIContextualAction(style: .destructive, title: nil) { (action, view, completion) in
+               let eventNameToDelete = self.myData[indexPath.row].name
+               self.deleteEvent(eventNameToDelete)
+               
+               tableView.reloadData()
+               completion(true)
+           }
+           deleteAction.image = UIImage(systemName: "trash")
+           deleteAction.backgroundColor = .systemRed
+        let swipeConfig = UISwipeActionsConfiguration(actions: [deleteAction])
+        swipeConfig.performsFirstActionWithFullSwipe = false
+        return swipeConfig
+           
+    }
+    
+    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let updateAction = UIContextualAction(style: .normal, title: nil) { (action, view, completion) in
+            // Implement your update logic here
+            let card = self.myData[indexPath.row]
+            self.performSegue(withIdentifier: "UpdateEventSegue", sender: card.name)
+            completion(true)
+        }
+        updateAction.image = UIImage(systemName: "pencil")
+        updateAction.backgroundColor = .systemBlue
+        
+        let swipeConfig = UISwipeActionsConfiguration(actions: [updateAction])
+        swipeConfig.performsFirstActionWithFullSwipe = false
+        return swipeConfig
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "UpdateEventSegue" {
+            if let name = sender as? String, let updateController = segue.destination as? UpdateEventController {
+                updateController.name = name
+                
+            }
+            
+            
+        }
     }
 
     /*

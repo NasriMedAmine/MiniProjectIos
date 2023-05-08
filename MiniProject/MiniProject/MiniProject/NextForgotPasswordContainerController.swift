@@ -38,17 +38,52 @@ class NextForgotPasswordContainerController: UIViewController {
     }
     
     
-    
+    func runLoopFinal(completion: @escaping () -> Void) {
+        DispatchQueue.global(qos: .background).async {
+            // Run your loop here
+           
+            var loopPP = false
+            while loopPP == false {
+                if (SingletonClass.shared.isContainerPasswordForget){
+                    
+                    
+                    loopPP = true
+                }
+            }
+            
+            
+            DispatchQueue.main.async {
+                completion() // Call the completion handler on the main thread
+            }
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.runLoopFinal {
+            
+            self.labelname.text = SingletonClass.shared.emailUser
+            self.labelemail.text = SingletonClass.shared.nameUser
+            print("----------------------------------------------------------------")
+            print("----------------------------------------------------------------")
+            print("---------------------------test f container forget password----------")
 
-//        labelEmail.text = SingletonClass.shared.emailUser
-//        labelUsername.text = SingletonClass.shared.nameUser
+            print(SingletonClass.shared.emailUser)
+            print(SingletonClass.shared.nameUser)
+            print("----------------------------------------------------------------")
+            print("----------------------------------------------------------------")
+        }
+//        self.labelname.text = SingletonClass.shared.emailUser
+//        self.labelemail.text = SingletonClass.shared.nameUser
+//        print("----------------------------------------------------------------")
+//        print("----------------------------------------------------------------")
+//        print("---------------------------test f container forget password----------")
 //
 //        print(SingletonClass.shared.emailUser)
 //        print(SingletonClass.shared.nameUser)
-        
+//        print("----------------------------------------------------------------")
+//        print("----------------------------------------------------------------")
+
         // Do any additional setup after loading the view.
     }
     

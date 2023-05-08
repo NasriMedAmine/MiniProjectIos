@@ -12,27 +12,26 @@ struct CardDonationItem: View {
     
     var body: some View {
             VStack(alignment: .leading){
-                ZStack{
-                    Image(donation.photo)
-                        .resizable()
-                        .aspectRatio( contentMode: .fill)
-                        .frame(height: 80)
-                        .clipped()
-                }
+                
             Spacer().frame(height: 15)
             HStack {
                 Spacer().frame(width: 15)
-                Text("Title :")
-                    .font(.system(size: 24))
+                Image("donation")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 50, height: 50)
                 
-                Spacer().frame(width: 25)
+                Spacer().frame(width: 75)
                 
-                Text(donation.title)
+                Text(donation.titre)
                     .font(.system(size: 24))
                 
                 
                 }
-            
+                Rectangle()
+                        .frame(height: 1)
+                        .foregroundColor(.gray)
+                        .padding(.horizontal, 30)
             Spacer().frame(height: 15)
             HStack{
                 Spacer().frame(width: 15)
@@ -41,7 +40,7 @@ struct CardDonationItem: View {
                 
                 Spacer().frame(width: 25)
                 
-                Text(donation.typeDonation)
+                Text(donation.typedonation.joined(separator: ", "))
                     .font(.system(size: 24))
                 
             }
@@ -56,7 +55,8 @@ struct CardDonationItem: View {
                             .font(.system(size: 24))
                         Spacer().frame(height: 10)
                         Text(donation.description)
-                            .font(.system(size: 24))
+                            .font(.custom("Didot", size: 20))
+                                .foregroundColor(.gray)
                         
                     }
                 }
@@ -65,20 +65,18 @@ struct CardDonationItem: View {
             
         }
         .background(Color(.tertiarySystemFill))
-        .background(Color(red: 0.7529411764705882, green: 0.9647058823529412, blue: 0.9529411764705882))
+        .background(Color(.systemGray6))
         .cornerRadius(12)
-        .shadow(radius: 5)
+        .shadow(radius: 10)
         
         
         
     }
 }
 
+
 struct CardDonationItem_Previews: PreviewProvider {
     static var previews: some View {
-        CardDonationItem(donation: donation2)
-            .previewLayout(.sizeThatFits)
-            .background(Color(red: 0.7529411764705882, green: 0.9647058823529412, blue: 0.9529411764705882))
-
+        CardDonationItem(donation: Donation(id:"444",titre: "test", typedonation:["test1","test2"] , description: "testestetstststsduqsdqs"))
     }
 }
