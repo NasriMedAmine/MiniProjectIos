@@ -41,6 +41,9 @@ class ProfilController: UIViewController {
     @IBOutlet weak var btnFaceId: UIImageView!
     
     
+    @ObservedObject var managerView = SocketIOManager()
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -279,6 +282,17 @@ class ProfilController: UIViewController {
         
         print("yassine yassine")
         performSegue(withIdentifier: "LogoutSegue", sender: nil)
+        
+        
+        
+        
+        
+        
+        self.managerView.logOut(name: SingletonClass.shared.nameUser)
+        
+        
+        
+        
     }
     
 

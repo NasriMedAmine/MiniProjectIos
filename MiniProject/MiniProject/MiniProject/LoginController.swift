@@ -475,6 +475,7 @@ class LoginController: UIViewController {
                             
                                 SingletonClass.shared.token = token
                                 SingletonClass.shared.emailUser = jsonRes["user"]["email"].rawValue as! String
+                                SingletonClass.shared.nameUser = jsonRes["user"]["name"].rawValue as! String
 
                                 
                                 let storyboard = UIStoryboard(name: "Main", bundle: nil)

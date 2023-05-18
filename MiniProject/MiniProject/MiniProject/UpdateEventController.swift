@@ -7,6 +7,7 @@
 
 import UIKit
 import Alamofire
+import SwiftUI
 
 class UpdateEventController: UIViewController {
 
@@ -82,7 +83,100 @@ class UpdateEventController: UIViewController {
         upEventDescription.leftView = paddingView4
         upEventDescription.leftViewMode = .always
         // Do any additional setup after loading the view.
+        
+        
+        
+        
+        
+        self.upEventLocation.text = SingletonClass.shared.LongToEventItem + " ;  " + SingletonClass.shared.LatiToEventItem
+        self.upEventDescription.text = SingletonClass.shared.descriptionToEventItem
+        self.upEventPrice.text = String(SingletonClass.shared.priceToEventItem)
+        
+        
+        
+        
+        
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(textFieldTapped))
+        self.upEventLocation.addGestureRecognizer(tapGestureRecognizer)
+        
+        
+        
+        
+        self.runLoopForLocation{
+            print("-------------------------------------------------------")
+            print("-------------------------------------------------------")
+
+
+            print("kamalt loop runLoopForLocation")
+            
+            //self.LocationEvent.text = String(SingletonClass.shared.longitude) + "          "+String(SingletonClass.shared.latitude)
+            
+            self.upEventLocation.text = "\(SingletonClass.shared.longitude),\(SingletonClass.shared.latitude)"
+            
+            print("-------------------------------------------------------")
+            print("-------------------------------------------------------")
+
+        }
+        
+        
+        
+        
     }
+    
+    
+    @objc func textFieldTapped() {
+            // The text field was tapped, do something here
+            print("Text field tapped!")
+            print("LocationEvent!")
+//        let swiftUIView = MapViewEent()
+//        let hostingController = UIHostingController(rootView: swiftUIView)
+//
+//        present(hostingController, animated: true, completion: nil)
+
+        
+//        let swiftUIView = MapViewEent()
+                let swiftUIView = ContentView3()
+
+                let hostingController = UIHostingController(rootView: swiftUIView)
+                let navController = UINavigationController(rootViewController: hostingController)
+        hostingController.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .close, target: self, action: #selector(dismissSwiftUIView))
+                present(navController, animated: true, completion: nil)
+        
+        
+        }
+    
+    @objc func dismissSwiftUIView() {
+            dismiss(animated: true, completion: nil)
+        }
+    
+    
+    
+    
+    func runLoopForLocation(completion: @escaping () -> Void) {
+        DispatchQueue.global(qos: .background).async {
+            // Run your loop here
+           
+            var loopPP = false
+            while loopPP == false {
+                if (SingletonClass.shared.isSayeKamelLocation){
+                    
+                    
+                    loopPP = true
+                }
+            }
+            
+            
+            DispatchQueue.main.async {
+                completion() // Call the completion handler on the main thread
+            }
+        }
+    }
+    
+    
+    
+    
+    
+    
     
 
     func updateEvent(name: String, location: String, price: String, date: Date, description: String) {
@@ -102,6 +196,12 @@ class UpdateEventController: UIViewController {
                 switch response.result {
                 case .success(let value):
                     print("Event updated successfully: \(value)")
+                    
+                    
+                    let alertController = UIAlertController(title: "Succes", message: "event add in BD", preferredStyle: .alert)
+                    let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+                    alertController.addAction(okAction)
+                    self.present(alertController, animated: true, completion: nil)
                 case .failure(let error):
                     print("Failed to update event: \(error)")
                 }

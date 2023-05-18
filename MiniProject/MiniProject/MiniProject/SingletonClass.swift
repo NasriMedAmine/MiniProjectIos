@@ -18,11 +18,26 @@ class SingletonClass: NSObject,ObservableObject {
     var token: String = ""
     
     
+    
+    var NameToEventItem : String = ""
+    var LatiToEventItem : String = ""
+    var LongToEventItem : String = ""
+    var descriptionToEventItem : String = ""
+    var priceToEventItem : Int = 0
+    
+    
+    
+    
+    
+    
+    
+    
     @Published var isThatProfileConnRes: Bool = false
     
     @Published var isThatProfileConnResToHeader: Bool = false
     
-    
+    @Published var isThatProfileConnResToHeaderMakeLogOut: Bool = false
+
     
     var isContainerPasswordForget: Bool = false
     

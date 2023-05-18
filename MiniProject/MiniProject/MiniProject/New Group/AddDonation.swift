@@ -16,7 +16,8 @@ struct AddDonation: View {
     @State
     private var description = ""
     
-    
+    @State private var showAlert = false
+
   
     
     @State var isCheckedFood: Bool = false
@@ -150,6 +151,8 @@ struct AddDonation: View {
                         
                         Button(action: {
                             addDonation()
+                            
+                            self.showAlert = true
                         }) {
                             Text("Submit")
                                 .frame(width: 100)
@@ -162,6 +165,12 @@ struct AddDonation: View {
                                 .shadow(radius: 5)
                             
                         }
+                        .alert(isPresented: $showAlert) {
+                            let text = "donation was added successfully"
+                            
+                            
+                            return Alert(title: Text("donation Added"), message: Text(text), dismissButton: .default(Text("OK")))
+                                }
                         
                         Spacer().frame(width: 22)
                        

@@ -1415,7 +1415,7 @@
             <objects>
                 <viewController id="kyy-DV-Gpu" customClass="ControllerEvent" customModule="MiniProject" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="gjw-cj-k6B">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="783"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" rowHeight="368" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="ojA-fR-v7e">
@@ -1565,7 +1565,7 @@ UHJpY2UgEDo
             <objects>
                 <viewController storyboardIdentifier="UpdateEvent" id="cW4-kk-evq" customClass="UpdateEventController" customModule="MiniProject" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="lQW-tn-C3e">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="783"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Event Name" textAlignment="natural" minimumFontSize="22" translatesAutoresizingMaskIntoConstraints="NO" id="aUG-56-QRz">
@@ -1593,6 +1593,9 @@ UHJpY2UgEDo
                                     </backgroundConfiguration>
                                     <color key="baseForegroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </buttonConfiguration>
+                                <connections>
+                                    <segue destination="kyy-DV-Gpu" kind="show" id="LXA-dd-wFA"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZaI-TQ-YoF">
                                 <rect key="frame" x="44" y="630" width="304" height="42"/>
@@ -2338,6 +2341,7 @@ UGhvbmUgEBAQEBAQOg
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
+        <segue reference="LXA-dd-wFA"/>
         <segue reference="kVX-tK-1Ah"/>
     </inferredMetricsTieBreakers>
     <resources>

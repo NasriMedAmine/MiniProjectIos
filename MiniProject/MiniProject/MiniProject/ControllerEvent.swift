@@ -7,6 +7,7 @@
 
 import UIKit
 import Alamofire
+import SwiftUI
 
 class ControllerEvent: UIViewController,UITableViewDataSource   , UITableViewDelegate {
     
@@ -148,8 +149,21 @@ class ControllerEvent: UIViewController,UITableViewDataSource   , UITableViewDel
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let updateAction = UIContextualAction(style: .normal, title: nil) { (action, view, completion) in
             // Implement your update logic here
-            let card = self.myData[indexPath.row]
-            self.performSegue(withIdentifier: "UpdateEventSegue", sender: card.name)
+            let selectedItem = self.myData[indexPath.row]
+            
+            SingletonClass.shared.descriptionToEventItem = selectedItem.description
+            SingletonClass.shared.NameToEventItem = selectedItem.name
+            SingletonClass.shared.priceToEventItem = selectedItem.price
+            
+            let array = selectedItem.location.components(separatedBy: ",")
+            
+            SingletonClass.shared.LatiToEventItem = array[0]
+            SingletonClass.shared.LongToEventItem = array[1]
+            
+            
+            
+            
+            self.performSegue(withIdentifier: "UpdateEventSegue", sender: selectedItem.name)
             completion(true)
         }
         updateAction.image = UIImage(systemName: "pencil")
@@ -170,6 +184,76 @@ class ControllerEvent: UIViewController,UITableViewDataSource   , UITableViewDel
             
         }
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("--------------------------------------------------")
+        print("--------------------------------------------------")
+        print("--------------------------------------------------")
+        print("--------------------------------------------------")
+        print("--------------------------------------------------")
+        print("--------------------------------------------------")
+        print("--------------------------------------------------")
+        print("--------------------------------------------------")
+            // Get the selected item from the myData array
+            let selectedItem = myData[indexPath.row]
+            
+            // Perform the desired action
+            print("Selected item: \(selectedItem.name)")
+        
+        
+            print(selectedItem.location)
+        
+        SingletonClass.shared.descriptionToEventItem = selectedItem.description
+        SingletonClass.shared.NameToEventItem = selectedItem.name
+        SingletonClass.shared.priceToEventItem = selectedItem.price
+        
+        let array = selectedItem.location.components(separatedBy: ",")
+        
+        SingletonClass.shared.LatiToEventItem = array[0]
+        SingletonClass.shared.LongToEventItem = array[1]
+        
+        
+        
+        print(SingletonClass.shared.LatiToEventItem)
+        print(SingletonClass.shared.LongToEventItem)
+        print(SingletonClass.shared.priceToEventItem)
+        print(SingletonClass.shared.descriptionToEventItem)
+            
+            // Deselect the row if needed
+            tableView.deselectRow(at: indexPath, animated: true)
+        
+        print("--------------------------------------------------")
+        print("--------------------------------------------------")
+        print("--------------------------------------------------")
+        print("--------------------------------------------------")
+        
+        let swiftUIView = MapViewForItemEventMain()
+                let hostingController = UIHostingController(rootView: swiftUIView)
+                let navController = UINavigationController(rootViewController: hostingController)
+                hostingController.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(dismissSwiftUIView))
+                present(navController, animated: true, completion: nil)
+        }
+    
+    
+    
+    @objc func dismissSwiftUIView() {
+            dismiss(animated: true, completion: nil)
+        }
+    
+    
+    
 
     /*
     // MARK: - Navigation
