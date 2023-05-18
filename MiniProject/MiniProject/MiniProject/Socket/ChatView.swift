@@ -13,8 +13,9 @@ import CoreData
 struct ChatView: View {
     // The SocketIOManager instance
     @ObservedObject var managerView = SocketIOManager()
-    
-    @State var token: String = ""
+    @StateObject private var singleton = SingletonClass.shared
+
+    @State var token: String = SingletonClass.shared.token
     @State var nameUserME: String = ""
     let emailToUser: String
     let nameToUser: String
@@ -37,6 +38,8 @@ struct ChatView: View {
         self.managerView = manager
         self.emailToUser = emailTOUser
         self.nameToUser = nameTOUser
+        
+        SingletonClass.shared.nameUserIsConNotME = nameTOUser
         
         
         
@@ -72,6 +75,18 @@ struct ChatView: View {
         
         
         var body: some View {
+            VStack{
+                
+//                headerUser(username: self.nameToUser, isOnline: singleton.isThatProfileConnRes)
+//                headerUser(username: self.nameToUser)
+                    
+                headerUser(username: self.nameToUser, managerView: self.managerView)
+                
+            }
+            .onAppear{
+//                self.managerView.isThatProfileConn(email: self.nameToUser, nameFromUser: SingletonClass.shared.nameUser)
+
+            }
             VStack {
                 // List of messages
                 List(managerView.messages, id: \.self) { message in
@@ -81,11 +96,13 @@ struct ChatView: View {
                         ChatImageRow(chatMessage: ChatMessage2(NameImage: "name"))
                     }
                     else{
-                        if(message.token == self.token){
-                            ChatRow(chatMessage: ChatMessage(message: message.message, avatar: self.nameUserME, color: .green, isMe: true))
+                        if(message.token == "tokenUser"){
+                            ChatRow(chatMessage: ChatMessage(message: message.message, avatar: self.nameToUser, color: .gray, isMe: false))
+
                         }
                         else{
-                            ChatRow(chatMessage: ChatMessage(message: message.message, avatar: self.nameToUser, color: .gray, isMe: false))
+                            ChatRow(chatMessage: ChatMessage(message: message.message, avatar: self.nameUserME, color: .green, isMe: true))
+
 
                         }
                     }
@@ -97,7 +114,7 @@ struct ChatView: View {
                     print("emailUser")
                     print(emailUser)
                     
-                    //self.managerView.sendMeOldMessages(email:emailUser)
+                    self.managerView.sendMeOldMessages(email:emailUser,nameUserChat: self.nameToUser)
                 }
                 
                 
@@ -108,7 +125,7 @@ struct ChatView: View {
                     VStack{
                         
                         Button(action: {
-                            managerView.sendMessage(message: messageText,tokenFromUser: self.token,emailToUser: self.emailToUser)
+                            managerView.sendMessage(message: messageText,tokenFromUser: SingletonClass.shared.token,emailToUser: self.emailToUser)
                             messageText = ""
                         }) {
                             Text("Send")
@@ -145,12 +162,12 @@ struct ChatView: View {
                     print(self.emailToUser)
                     print("----------------------------------------------------")
 //
-                    
-                    
-                    print("----------------------------------------------------")
-                    
 
-                    
+
+                    print("----------------------------------------------------")
+
+
+
 
                         }
             }

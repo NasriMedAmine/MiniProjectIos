@@ -34,6 +34,9 @@ class SocketIOManager: ObservableObject {
     @Published var messages: [ChatMessageFromServer] = []
     
     
+//    @Published var isThatProfileConnRes: Bool = false
+    
+    
     
     @Published var messagesAll: [Message] = []
 
@@ -65,6 +68,109 @@ class SocketIOManager: ObservableObject {
             print("fin test messageFromServerToMobile")
 
         }
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        socket.on("isThatProfileConnRes") { data, ack in
+            print("--------------------------------------------------")
+            print("--------------------------------------------------")
+            print("test isThatProfileConnRes")
+            print(data)
+            if let isThatProfileConnResBool = data[0] as? String {
+                if(isThatProfileConnResBool == "yes" ){
+                    print("fin test if(isThatProfileConnResBool == yes)")
+                    SingletonClass.shared.isThatProfileConnRes = true
+                    
+                }
+                else{
+                    print("fin test if(isThatProfileConnResBool == no)")
+                    SingletonClass.shared.isThatProfileConnRes = false
+                    
+                }
+                
+
+            }
+            print("fin test messageFromServerToMobile")
+
+            print("--------------------------------------------------")
+            print("--------------------------------------------------")
+        }
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        socket.on("thatProfilIsConNowFromServer") { data, ack in
+            print("--------------------------------------------------")
+            print("--------------------------------------------------")
+            print("--------------------------------------------------")
+            print("test thatProfilIsConNowFromServer")
+            print("SingletonClass.shared.nameUser")
+            print(SingletonClass.shared.nameUser)
+
+            print(data)
+            if let nameOfUserCon = data[0] as? String {
+                
+                
+                if let nameUserOFme = data[1] as? String {
+                    
+                    print("--------------------------------------------------")
+                    print("nameOfUserCon    E")
+                    print(nameOfUserCon)
+                    
+                    
+                    print("nameUserOFme    E")
+                    print(nameUserOFme)
+                    
+                    if(nameUserOFme == SingletonClass.shared.nameUser ){
+                        print("--------------------------------------------------")
+                        print("--------------------------------------------------")
+                        print("nameOfUserCon == SingletonClass.shared.nameUserIsConNotME == yes)")
+                        print("--------------------------------------------------")
+                        print("--------------------------------------------------")
+                        SingletonClass.shared.isThatProfileConnResToHeader = true
+
+                    }
+                    else{
+                        print("--------------------------------------------------")
+                        print("--------------------------------------------------")
+                        print("--------------------------------------------------")
+                        print("--------------------------------------------------")
+                        print("nameOfUserCon == SingletonClass.shared.nameUserIsConNotME == no)")
+                        SingletonClass.shared.isThatProfileConnResToHeader = false
+                        
+                    }
+                }
+                
+                
+                
+                
+
+            }
+            print("fin test thatProfilIsConNowFromServer")
+
+            print("--------------------------------------------------")
+            print("--------------------------------------------------")
+        }
+        
         
         
         
@@ -144,14 +250,66 @@ class SocketIOManager: ObservableObject {
                 
                 for message in listMessages {
                     if let messageText = message["message"]{
+                        let tokenUser = SingletonClass.shared.token
+                        print("--------------------------------------------------")
+                        print("--------------------------------------------------")
+                        print("--------------------------------------------------")
+                        print("--------------------------------------------------")
+                        print("--------------------------------------------------")
+                        print("--------------------------------------------------")
+                        print("--------------tokenUser---------------")
+                        print(tokenUser)
+                        print("---message--------------------")
+                        print(message)
+                        print("message[isForMe]")
+                        print(message["isForMe"])
+                        print(message["isForMe"] == "yes")
                         
+                        if(message["isForMe"] == "yes"){
+                            print("--------------------------------------------------")
+                            print("--------------------------------------------------")
+                            print("--------------------------------------------------")
+                            print("--------------------------------------------------")
+                            print("--------------------------------------------------")
+                            print("--------------------------------------------------")
+                            let messageFromServer = ChatMessageFromServer(message: messageText, token: tokenUser , isImage: false)
+                            self.messages.append(messageFromServer)
+                            print("test messages imageFromServerToClient   message[isForMe] == yes")
+                            print("--------------------------------------------------")
+                            print("--------------------------------------------------")
+                            print("--------------------------------------------------")
+                            print("--------------------------------------------------")
+                            print("--------------------------------------------------")
+                            print("--------------------------------------------------")
+                        }
+                        else{
+                            print("--------------------------------------------------")
+                            print("--------------------------------------------------")
+                            print("--------------------------------------------------")
+                            print("--------------------------------------------------")
+                            print("--------------------------------------------------")
+                            print("--------------------------------------------------")
+                            let messageFromServer = ChatMessageFromServer(message: messageText, token: "tokenUser" , isImage: false)
+                            self.messages.append(messageFromServer)
+                            print("test messages imageFromServerToClient   message[isForMe] == no")
+                            print("--------------------------------------------------")
+                            print("--------------------------------------------------")
+                            print("--------------------------------------------------")
+                            print("--------------------------------------------------")
+                            print("--------------------------------------------------")
+                            print("--------------------------------------------------")
+                            
+                        }
                         // Do something with messageText and fromEmail
                         // For example, print them out
-                        let tokenUser = SingletonClass.shared.token
-                        let messageFromServer = ChatMessageFromServer(message: messageText, token: tokenUser , isImage: false)
-                        self.messages.append(messageFromServer)
-                        print("test messages imageFromServerToClient")
+                        print("--------------------------------------------------")
+                        print("--------------------------------------------------")
+                        print("--------------------------------------------------")
+                        print("--------------------------------------------------")
+                        print("--------------------------------------------------")
+                        print("--------------------------------------------------")
                         print(self.messages)
+
                         
                         
                     }
@@ -293,18 +451,41 @@ class SocketIOManager: ObservableObject {
     }
     
     
-    func sendMeOldMessages(email:String) {
+    func sendMeOldMessages(email:String,nameUserChat:String) {
         
         print("test socket io")
 
         print("sendMeOldMessages to server")
         
         
-        socket.emit("sendMeOldMessage", email)
+        socket.emit("sendMeOldMessage", email,nameUserChat)
         
         print("sendMeOldMessages to server")
 
     }
+    
+    func isThatProfileConn(email:String , nameFromUser : String) {
+        print("--------------------------------------------------")
+        print("--------------------------------------------------")
+        
+        print("test socket io")
+
+        print("isThatProfileConn to server")
+        print(email)
+        SingletonClass.shared.isThatProfileConnResToHeader  = false
+        
+        socket.emit("isThatProfileConn", email,nameFromUser)
+        
+        print("isThatProfileConn to server")
+        
+        
+        print("--------------------------------------------------")
+        print("--------------------------------------------------")
+    }
+    
+    
+    
+    
     
     func getAllMessage(name:String) {
         print("-----------------------------------------------------")

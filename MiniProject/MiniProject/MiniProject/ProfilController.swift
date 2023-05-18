@@ -10,6 +10,7 @@ import CoreData
 
 import Alamofire
 import SwiftyJSON
+import SwiftUI
 
 
 class ProfilController: UIViewController {
@@ -37,6 +38,7 @@ class ProfilController: UIViewController {
     
     @IBOutlet weak var phoneLabel: UILabel!
     
+    @IBOutlet weak var btnFaceId: UIImageView!
     
     
     override func viewDidLoad() {
@@ -54,25 +56,27 @@ class ProfilController: UIViewController {
         self.viewUserInfo.layer.shadowOffset = CGSize(width: 0, height: 2)
         self.viewUserInfo.layer.shadowRadius = 4
 
-        if let myString = self.getMyUserEmail() as? String {
-            
-            
-            print("save++++++++++++++++++++++++++++++++++++++++")
-            
-            print(myString)
-                       
-            print("++++++++++++++++++++++++++++++++++++++++")
-            // The variable is a non-nil string
-            // Use myString in your code here
-            getWhoIamByEmail(token: myString)
-            
-            
-        } else {
-            // The variable is nil or not a string
-            // Handle the error case here
-        }
+//        if let myString = self.getMyUserEmail() as? String {
+//
+//
+//            print("save++++++++++++++++++++++++++++++++++++++++")
+//
+//            print(myString)
+//
+//            print("++++++++++++++++++++++++++++++++++++++++")
+//            // The variable is a non-nil string
+//            // Use myString in your code here
+//            getWhoIamByEmail(token: myString)
+//
+//
+//        } else {
+//            // The variable is nil or not a string
+//            // Handle the error case here
+//        }
+        self.getWhoIamByEmail(email: SingletonClass.shared.emailUser)
         
         tapgesture()
+        tapgestureFaceId()
         
 
         // Do any additional setup after loading the view.
@@ -121,11 +125,11 @@ class ProfilController: UIViewController {
     }
     
     
-    func getWhoIamByEmail(token : String){
+    func getWhoIamByEmail(email : String){
         
         
         let parameters: [String: String] = [
-                "email": token,
+                "email": email,
             ]
         
         
@@ -197,6 +201,36 @@ class ProfilController: UIViewController {
         LogoutImageDoor.addGestureRecognizer(tapGesture)
         LogoutImageDoor.isUserInteractionEnabled = true
     }
+    
+    
+    func tapgestureFaceId(){
+        
+        
+        
+        let tapGesture2 = UITapGestureRecognizer(target: self, action: #selector(toFaceIdSwift))
+        
+        
+        btnFaceId.addGestureRecognizer(tapGesture2)
+        btnFaceId.isUserInteractionEnabled = true
+    }
+    
+    @objc func toFaceIdSwift(){
+        
+        
+        
+        let swiftUIView = TestFaceId()
+
+        let hostingController = UIHostingController(rootView: swiftUIView)
+        let navController = UINavigationController(rootViewController: hostingController)
+        hostingController.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .close, target: self, action: #selector(dismissSwiftUIView))
+        present(navController, animated: true, completion: nil)
+        
+        
+        
+    }
+    @objc func dismissSwiftUIView() {
+            dismiss(animated: true, completion: nil)
+        }
     
     
     

@@ -52,10 +52,27 @@ struct ListMessages: View {
                 
                 
                 VStack{
-                    List(manager2.messagesAll ,id: \.self) { message in
-                        NavigationLink(destination: ChatView(manager: manager2, emailTOUser: message.email, nameTOUser: message.sender))
+//                    List(manager2.messagesAll ,id: \.self) { message in
+//                        NavigationLink(destination: ChatView(manager: manager2, emailTOUser: message.email, nameTOUser: message.sender))
+//                        {
+//                            cardListMessage(manager: manager2, message: message)
+//
+//                        }
+//                    }
+//                    .onAppear{
+//                        manager2.getAllMessage(name: SingletonClass.shared.nameUser)
+//
+//                    }
+                    
+                    List(messagesFinal) { message in
+                        NavigationLink(destination: ChatView(manager: manager2, emailTOUser: messagesFinal[0].email, nameTOUser: messagesFinal[0].sender))
                         {
-                            cardListMessage(manager: manager2, message: message)
+                            cardListMessage(manager: manager2, message: messagesFinal[0])
+//                            cardListMessage(manager: manager2, message: messagesFinal[0])
+//                            cardListMessage(manager: manager2, message: messagesFinal[0])
+//                            cardListMessage(manager: manager2, message: messagesFinal[0])
+//                            cardListMessage(manager: manager2, message: messagesFinal[0])
+//                            cardListMessage(manager: manager2, message: messagesFinal[0])
 
                         }
                     }

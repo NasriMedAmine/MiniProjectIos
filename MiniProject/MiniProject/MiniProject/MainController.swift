@@ -36,7 +36,7 @@ class MainController: UIViewController, UICollectionViewDataSource, UICollection
 //    var timer  : Timer?
     
     
-    var listeimage = ["affiche3","aaa","affiche3"]
+    var listeimage = ["affiche3","aaa","takta","tikta123"]
     var timer: Timer?
         var currentIndex = 0
     
@@ -83,8 +83,9 @@ class MainController: UIViewController, UICollectionViewDataSource, UICollection
         
         //CollectionImageSwip.register(MainCollectionViewCell.self, forCellWithReuseIdentifier: "CellAcc")
         
-        timer = Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: #selector(scrollToNextItem), userInfo: nil, repeats: true)
+        
 //        timer = Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: #selector(SlideToNext), userInfo: nil, repeats: true)
+        scrollToNextItem()
     }
     
     

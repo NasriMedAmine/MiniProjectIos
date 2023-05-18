@@ -93,14 +93,16 @@ struct ProfileUser: View {
                 }
                 
                 ZStack{
-//                    NavigationLink(destination: TestCodeQr(nameUser: user.name, emailUser: user.email, TelUser: user.tel))
-                    NavigationLink(destination: TestFaceId())
+                    NavigationLink(destination: TestCodeQr(nameUser: user.name, emailUser: user.email, TelUser: user.tel))
+                   
                     {
                         Text("Code QR")
                             .font(.title).bold()
                             .fontWeight(.medium)
 
                     }
+                    
+                    
                     
                     
                     

@@ -149,7 +149,7 @@ class SignUpController: UIViewController{
         LabelUsername.font = UIFont.systemFont(ofSize: 20)
         LabelUsername.defaultTextAttributes = attributes
         LabelUsername.leftView = paddingView2
-        LabelFullname.leftViewMode = .always
+        LabelUsername.leftViewMode = .always
         
         LabelPassword.layer.borderColor = borderColor
         LabelPassword.layer.cornerRadius = 20
@@ -213,7 +213,7 @@ class SignUpController: UIViewController{
         
         self.imageSignupModif.layer.borderWidth    = 2
         self.imageSignupModif.layer.borderColor = borderColor
-        self.imageSignupModif.layer.cornerRadius = imageSignupModif.frame.size.height/2
+        self.imageSignupModif.layer.cornerRadius = imageSignupModif.frame.size.height/10
         
         
         tapgesture()

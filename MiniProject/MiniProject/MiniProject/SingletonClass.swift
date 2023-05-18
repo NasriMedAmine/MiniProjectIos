@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SingletonClass: NSObject {
+class SingletonClass: NSObject,ObservableObject {
 
     
     static let shared = SingletonClass()
@@ -18,12 +18,22 @@ class SingletonClass: NSObject {
     var token: String = ""
     
     
+    @Published var isThatProfileConnRes: Bool = false
+    
+    @Published var isThatProfileConnResToHeader: Bool = false
+    
+    
+    
     var isContainerPasswordForget: Bool = false
     
     var isSayeKamelLocation: Bool = false
 
     var latitude: Double = 0
     var longitude: Double = 0
+
+    
+    
+    var nameUserIsConNotME: String = ""
 
     private override init() {}
 }

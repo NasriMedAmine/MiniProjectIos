@@ -175,7 +175,7 @@ class AddEventController: UIViewController {
             
             //self.LocationEvent.text = String(SingletonClass.shared.longitude) + "          "+String(SingletonClass.shared.latitude)
             
-            self.LocationEvent.text = "\(SingletonClass.shared.longitude)     ,      \(SingletonClass.shared.latitude)"
+            self.LocationEvent.text = "\(SingletonClass.shared.longitude)  , \(SingletonClass.shared.latitude)"
             
             print("-------------------------------------------------------")
             print("-------------------------------------------------------")

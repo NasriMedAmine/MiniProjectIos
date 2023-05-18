@@ -278,6 +278,14 @@ class LoginController: UIViewController {
                                 self.navigationController?.pushViewController(destinationVC, animated: true)
                                 
                             }
+                            else{
+                                
+                                
+                                let alertController = UIAlertController(title: "Error", message: "login or username failed", preferredStyle: .alert)
+                                let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+                                alertController.addAction(okAction)
+                                self.present(alertController, animated: true, completion: nil)
+                            }
                             
                             
                             if(jsonRes["message"].rawValue as! String == "!LoginEmailVerified"){
@@ -466,6 +474,8 @@ class LoginController: UIViewController {
                             if(jsonRes["succes"] == "true"){
                             
                                 SingletonClass.shared.token = token
+                                SingletonClass.shared.emailUser = jsonRes["user"]["email"].rawValue as! String
+
                                 
                                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
 

@@ -37,21 +37,35 @@ struct AddDonation: View {
                 
                 //awel wahda mtaa AddDonation text
                 ZStack {
+                    // Background image
+                                Image("salemdonation")
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .edgesIgnoringSafeArea(.all)
+                                .frame(width: 500)
+                                
+                                
+                    
                     Text("Add Donation")
                         .fontWeight(.bold)
                         .multilineTextAlignment(.center)
                         .padding()
                         .font(.title)
                         .layoutPriority(1)
+                        .foregroundColor(Color.white)
                     
                 }
                 .frame(maxWidth: .infinity)
+                .frame(height: 150)
                 .background(Color(red: 0.11372549019607843, green: 0.7176470588235294, blue: 0.6823529411764706))
                 .clipShape(RoundedCorner(radius: 30, corners: [.bottomLeft, .bottomRight]))
                 
+         
                 
-                Spacer()
-                    .frame(height: 30)
+
+                
+                
+         
                 
                 
                 //hedhi mtaa type donation
@@ -192,6 +206,8 @@ struct AddDonation: View {
                             
                         }
                     }
+                    Spacer()
+
                     
                     
                 }
@@ -203,9 +219,8 @@ struct AddDonation: View {
             
             
             
-            
-            
-        }
+        }            .ignoresSafeArea()
+
         }
         
     }
