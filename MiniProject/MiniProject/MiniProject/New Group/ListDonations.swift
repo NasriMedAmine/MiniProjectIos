@@ -16,6 +16,9 @@ struct ListDonations: View {
         
         var body: some View {
     
+            
+            
+            
                 ZStack{
                        List(viewModel.listCardDonation) { donation in
                         CardDonationItem(donation: donation)                    }

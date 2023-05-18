@@ -38,11 +38,11 @@ struct AddDonation: View {
                 //awel wahda mtaa AddDonation text
                 ZStack {
                     // Background image
-                                Image("salemdonation")
+                                Image("donationhand")
                                 .resizable()
                                 .aspectRatio(contentMode: .fill)
                                 .edgesIgnoringSafeArea(.all)
-                                .frame(width: 500)
+                                .frame(width: 400)
                                 
                                 
                     
@@ -53,10 +53,10 @@ struct AddDonation: View {
                         .font(.title)
                         .layoutPriority(1)
                         .foregroundColor(Color.white)
-                    
+                        .padding(.top, 120)
                 }
                 .frame(maxWidth: .infinity)
-                .frame(height: 150)
+                .frame(height: 200)
                 .background(Color(red: 0.11372549019607843, green: 0.7176470588235294, blue: 0.6823529411764706))
                 .clipShape(RoundedCorner(radius: 30, corners: [.bottomLeft, .bottomRight]))
                 
@@ -134,7 +134,7 @@ struct AddDonation: View {
                 
                 
                 TextField("Add donation description" ,text: $description)
-                    .frame(width: 320,height: 150)
+                    .frame(width: 320,height: 100)
                     .padding()
                     .background(Color(red: 0.7529411764705882, green: 0.9647058823529412, blue: 0.9529411764705882))
                     .cornerRadius(30)

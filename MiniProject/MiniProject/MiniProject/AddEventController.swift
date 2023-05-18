@@ -109,7 +109,7 @@ class AddEventController: UIViewController {
 
                             if(jsonRes["succes"] == "true"){
 
-                                let alertController = UIAlertController(title: "Succes", message: "event add in BD", preferredStyle: .alert)
+                                let alertController = UIAlertController(title: "Succes", message: "Event was added successfully", preferredStyle: .alert)
                                 let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
                                 alertController.addAction(okAction)
                                 self.present(alertController, animated: true, completion: nil)
